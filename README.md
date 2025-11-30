@@ -1,179 +1,235 @@
-# CodersFlow - Complete Social Coding Platform
+# 🪐 OpenOrbit (Project CodersFlow)
 
-A full-stack social coding platform with real-time features, authentication, and file upload capabilities.
+A clean, modern platform where developers can share projects, talk about ideas, and look through code in a scrollable mobile feed. It fills the gap between code‑hosting platforms and social apps by highlighting mid‑stage projects that deserve visibility.
 
-## 🚀 Features
+---
 
-- **Authentication System**: JWT-based login/register with secure token storage
-- **Real-time Posts**: WebSocket-powered live updates for posts, likes, and comments
-- **File Upload**: Support for images, documents, and archives
-- **Dynamic Feed**: Real MongoDB integration with pagination and filtering
-- **Tag System**: Add and filter posts by tags
-- **Cross-platform**: Works on Android, iOS, and Web
+## 📌 Table of Contents
+- About the Project  
+- Key Features  
+- Tech Stack  
+- System Architecture  
+- Project Structure  
+- Getting Started  
+- Prerequisites  
+- Backend Setup  
+- Frontend Setup  
+- Environment Variables  
+- API Reference  
+- The Recommendation Engine  
+- AI Integration  
+- Contributing  
+- License  
 
-## 📁 Project Structure
+---
 
+## 🔭 About the Project
+
+OpenOrbit (previously CodersFlow) was built as part of the IIITM Gwalior hackathon. It focuses on giving developers a place to show practical work that isn’t quite finished yet but still worth exploring.
+
+The platform blends a visual feed, real-time chat, media previews, and an integrated AI helper.
+
+**Core Value:**
+- **Discover:** Scroll through project cards with images, videos, and PDFs.  
+- **Connect:** Talk through comments and real-time chat powered by websockets.  
+- **Learn:** Ask the built-in AI assistant to explain code on the spot.
+
+---
+
+## 🌟 Key Features
+
+### 📱 Core Experience
+- Endless scrolling feed built for smooth performance  
+- Media tiles that support images, MP4 videos, and PDFs (via Cloudinary)  
+- Topic filters to sort posts by tech stack  
+- Dark UI designed around black and deep gray  
+
+### ⚡ Real-Time Interaction
+- Live feed refresh using Socket.io  
+- Slide-up comments panel using PanResponder  
+- Soft, physics-style animations on interactive elements  
+
+### 🤖 Intelligence Layer
+- Gemini-powered AI helper for code questions  
+- Feed curation handled by a hybrid setup: Python + Node.js  
+
+---
+
+## 🛠 Tech Stack
+
+### **Frontend (Mobile)**
+| Technology | Description |
+|-----------|-------------|
+| React Native | Cross-platform UI |
+| Expo SDK | Build tools and native modules |
+| TypeScript | Static typing |
+| Expo Router | File-based routing |
+| Axios | HTTP client |
+| Socket.io-Client | Real-time communication |
+
+### **Backend (API)**
+| Technology | Description |
+|-----------|-------------|
+| Node.js | Runtime |
+| Express.js | REST API framework |
+| MongoDB | Database (Atlas) |
+| Mongoose | ODM |
+| Python | Feed curation logic |
+| Python-Shell | Node → Python bridge |
+
+### **DevOps & Tools**
+- Cloudinary (media hosting)  
+- Gemini API (AI features)  
+- Git/GitHub (version control)
+
+---
+
+## 🏗 System Architecture
+
+OpenOrbit uses a client-server setup with a separate service dedicated to feed curation.
+
+- **Client (React Native):** Handles UI, navigation, media, and sockets  
+- **API Server (Node/Express):** Auth, CRUD, file links, websocket events  
+- **MongoDB:** Stores users, posts, comments  
+- **Compute Layer:**  
+  - Node.js manages I/O  
+  - Python handles data scoring and sorting for personalized feeds  
+
+---
+
+## 📂 Project Structure
+
+```plaintext
+OpenOrbit/
+├── backend/backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
+│   └── server.js
+│
+└── frontend2/Frontend/
+    ├── app/
+    ├── components/
+    ├── services/
+    ├── assets/
+    └── constants/
 ```
-CodersFlow/
-├── backend/backend/          # Node.js/Express backend
-│   ├── controllers/          # API controllers
-│   ├── models/              # MongoDB models
-│   ├── routes/              # API routes
-│   ├── middleware/          # Auth middleware
-│   └── server.js            # Main server file
-├── frontend2/Frontend/      # React Native frontend
-│   ├── components/          # UI components
-│   ├── services/            # API services
-│   ├── screens/             # Screen components
-│   └── app/                 # Main app entry
-└── start-servers.bat        # Quick start script
-```
 
-## 🛠️ Setup Instructions
+---
 
-### Prerequisites
-- Node.js (v16 or higher)
-- MongoDB (local or cloud)
-- Expo CLI
-- Android Studio (for Android development)
+## 🚀 Getting Started
 
-### 1. Backend Setup
+### **Prerequisites**
+- Node.js (v18+)  
+- npm or yarn  
+- Python 3+  
+- Expo Go app or a device emulator  
+
+---
+
+## 🖥 Backend Setup
 
 ```bash
-cd CodersFlow/backend/backend
+cd backend/backend
 npm install
 npm run dev
 ```
 
-The backend will start on `http://localhost:5000`
+Server defaults to **port 5000**.
 
-### 2. Frontend Setup
+---
+
+## 📱 Frontend Setup
 
 ```bash
-cd CodersFlow/frontend2/Frontend
+cd frontend2/Frontend
 npm install
-npm start
+npx expo start
 ```
 
-### 3. Quick Start (Windows)
+Scan the QR code using Expo Go.
 
-Double-click `start-servers.bat` to start both servers automatically.
+---
 
-## 🔧 Configuration
+## 🔐 Environment Variables
 
-### Environment Variables
-
-Create a `.env` file in `backend/backend/`:
-
-```env
-MONGODB_URI=mongodb://localhost:27017/codersflow
-JWT_SECRET=your-super-secret-jwt-key
+### **Backend — `backend/backend/.env`**
+```
 PORT=5000
+MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/openorbit
+JWT_SECRET=your_super_secret_key_123
+GEMINI_API_KEY=your_google_ai_studio_key
+
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_cloud_secret
+
 HOST=0.0.0.0
 ```
 
-### API Configuration
-
-Update `frontend2/Frontend/config/api.js` for different environments:
-
-- **Android Emulator**: Use `10.0.2.2:5000`
-- **iOS Simulator**: Use `127.0.0.1:5000`
-- **Physical Device**: Use your computer's IP address
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-#### 1. Network Error (AxiosError)
-**Problem**: Frontend can't connect to backend
-**Solutions**:
-- Ensure backend server is running on port 5000
-- Check firewall settings
-- For Android emulator, use `10.0.2.2` instead of `127.0.0.1`
-- For physical device, use your computer's IP address
-
-#### 2. Metro Bundler Issues
-**Problem**: InternalBytecode.js not found
-**Solution**: The file has been created automatically. If issues persist:
-```bash
-cd frontend2/Frontend
-npx expo start --clear
+### **Frontend — `frontend2/Frontend/.env`**
+```
+EXPO_PUBLIC_DEV_HOST_IP=192.168.x.x
+EXPO_PUBLIC_API_BASE_URL=http://192.168.x.x:5000/api
 ```
 
-#### 3. MongoDB Connection Issues
-**Problem**: Database connection failed
-**Solutions**:
-- Ensure MongoDB is running
-- Check connection string in `.env`
-- Verify database permissions
+---
 
-#### 4. WebSocket Connection Issues
-**Problem**: Real-time features not working
-**Solutions**:
-- Check if backend WebSocket server is running
-- Verify CORS settings
-- Check network connectivity
+## 📡 API Reference
 
-### Development Tips
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | /api/users/register | Register a new user | No |
+| POST | /api/users/login | Login and get token | No |
+| GET | /api/posts/feed | Fetch main feed | Yes |
+| POST | /api/posts | Create a post | Yes |
+| POST | /api/agent/ask | Query the AI helper | Yes |
+| GET | /api/recommend/posts | Get curated posts | Yes |
 
-1. **Hot Reload**: Both servers support hot reload
-2. **Logs**: Check console logs for detailed error information
-3. **Network**: Use network tab in browser dev tools to debug API calls
-4. **Database**: Use MongoDB Compass to view data
+---
 
-## 📱 Mobile Development
+## 🧠 The Recommendation Engine [WIP] [Not Implemented Yet]
 
-### Android
-- Use Android Studio emulator
-- Update API config to use `10.0.2.2:5000`
-- Enable USB debugging for physical devices
+A Python script placed in  
+`backend/backend/utils/recommend.py`
 
-### iOS
-- Use Xcode simulator
-- Update API config to use `127.0.0.1:5000`
-- For physical device, use computer's IP address
+Steps:
+1. Node.js launches the Python script through python-shell  
+2. User and post data are sent in JSON form  
+3. Python calculates a score based on tags and past actions  
+4. Sorted post IDs go back to Node  
+5. Node sends the ordered feed to the mobile app  
 
-## 🔐 Authentication Flow
+---
 
-1. User registers/logs in
-2. JWT token stored in AsyncStorage
-3. Token sent with all API requests
-4. Protected routes check authentication
-5. WebSocket connection established after login
+## 🤖 AI Integration
 
-## 📡 Real-time Features
+Powered by the Google Gemini model through the `@google/generative-ai` SDK.
 
-- **New Posts**: Instantly appear in feed
-- **Post Updates**: Real-time like/unlike
-- **Post Deletions**: Immediate removal from feed
-- **User Activity**: Live notifications
+- Controller file: `agentController.js`  
+- Accepts a prompt and optional code context  
+- Returns markdown-ready explanations  
 
-## 🚀 Deployment
+---
 
-### Backend Deployment
-- Deploy to Heroku, Vercel, or AWS
-- Update CORS settings for production
-- Set environment variables
+## 🤝 Contributing
 
-### Frontend Deployment
-- Build with Expo
-- Deploy to app stores
-- Update API endpoints for production
+1. Fork the repo  
+2. Create a feature branch  
+3. Commit your work  
+4. Push the branch  
+5. Open a pull request  
 
-## 📞 Support
+All contributions are welcome.
 
-If you encounter issues:
-1. Check the troubleshooting section
-2. Verify all dependencies are installed
-3. Ensure both servers are running
-4. Check network connectivity
-5. Review console logs for errors
+---
 
-## 🎯 Next Steps
+## 📄 License
 
-- Add push notifications
-- Implement user profiles
-- Add comment system
-- Create admin panel
-- Add search functionality
-- Implement post categories
+This project is under the **MIT License**.
+
+<p align="center">
+Built with ❤️ by the OpenOrbit Team for the IIITM Gwalior Hackathon.
+</p>
